@@ -27,3 +27,9 @@ jobs:
 
       - name: Build the project
         run: bash ./scripts/build.sh
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: main-binary
+          path: ./dist/text_board.lsl
