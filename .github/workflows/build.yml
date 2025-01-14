@@ -31,7 +31,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: main-binary
+          name: text_board
           path: ./dist/text_board.min.lsl
 
           
@@ -64,7 +64,7 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: main-binary
+          name: text_board
 
       - name: test
         run: | 
@@ -89,5 +89,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./text_board.min.lsl
-          asset_name: main-binary
+          asset_name: text_board.lsl
           asset_content_type: application/octet-stream
