@@ -1,5 +1,11 @@
 includes=("./opt/include" )
-cmd="clang-cpp"
+cmd="cpp"
+pwd
+ls
+ls opt
+ls opt/include
+
+mkdir -p dist
 
 for include in ${includes[@]}; do
 	params="${params} -I$include"
