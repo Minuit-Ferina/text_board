@@ -14,7 +14,7 @@ done
 
 version=`git describe --tags`
 
-src=("bos_score_board.lsl")
+src=("text_board.lsl")
 
 function build_script() {
 	output_file="dist/${1%.lsl}.min.lsl"
