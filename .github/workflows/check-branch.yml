@@ -1,0 +1,22 @@
+name: Validate Pull Request Source Branch
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - main  # Target branch for pull requests
+
+jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Source Branch
+        run: |
+          echo "Validating the source branch..."
+          if [[ "${{ github.head_ref }}" != "develop" ]]; then
+            echo "Pull requests must come from the 'develop' branch. Current branch: ${{ github.head_ref }}"
+            exit 1
+          fi
+        shell: bash
