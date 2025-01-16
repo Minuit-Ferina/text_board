@@ -34,7 +34,7 @@ jobs:
   build:
     needs: check-current-branch
     if: contains(${{ needs.check.outputs.branch }}, 'main')`
-    uses: ./.github/workflows/reusable/build.yml
+    uses: ./.github/workflows/reusable-build.yml
 
           
   release:
