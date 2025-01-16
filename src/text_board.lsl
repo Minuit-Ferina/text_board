@@ -17,6 +17,8 @@ string test2 =
 key texture1 = "dd965aa4-b63e-a8d3-5ea7-f493f962d99c";
 key texture2 = "6cbc5a4f-8297-7f10-801d-823519ac0bef";
 
+list lookup_index_to_link;
+
 log(string str)
 {
 	// llSay(0, str);
@@ -65,8 +67,7 @@ displayBuff(string buff)
 		if(c >= 480)
 			return;
 
-		integer link  = getLinkNum(line, row);
-
+		integer link  = llList2Integer(lookup_index_to_link, c);
 		vector offset = char_to_offset(llGetSubString(buff, c, c));
 		llSetLinkPrimitiveParamsFast(link, [PRIM_TEXTURE, face, texture1, <0.09, 0.09, 0.0>, offset, 0.0]);
 	}
@@ -86,12 +87,29 @@ clearDisplay()
 	}
 }
 
+init()
+{
+	llSay(0, "Initializing the board");
+	// build a lookup list for index -> linknumber
+	integer c = 0;
+	integer n = 480;
+	for(; c < n; c++)
+	{
+		integer row	 = llFloor(c / 8) % 6;
+		integer line = llFloor(c / 48);
+
+		integer link = getLinkNum(line, row);
+		lookup_index_to_link += link;
+	}
+	llSay(0, "Board ready");
+}
+
 default
 {
 	state_entry()
 	{
+		init();
 		clearDisplay();
-		displayBuff("Crystie is the best :)");
 	}
 
 	link_message(integer sender_num, integer num, string str, key id)
