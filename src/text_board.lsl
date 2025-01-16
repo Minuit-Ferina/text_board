@@ -2,20 +2,12 @@
 #include "SetLinkTextureFast.lsl"
 
 integer DISPLAY_CLEAR = 0;
-integer DISPLAY_TEXT = 1;
+integer DISPLAY_TEXT  = 1;
 
-string test1 = "Lorem ipsum dolor sit amet, consectetuer adipisc";
-string test2 =
-	"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo "
-	"ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis "
-	"dis parturient montes, nascetur ridiculus mus. Donec quam felis, "
-	"ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa "
-	"quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, "
-	"arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. "
-	"Nullam dictum felis eu pede mollis pretium. Integer ti";
+key texture1		  = "dd965aa4-b63e-a8d3-5ea7-f493f962d99c";
+key texture2		  = "6cbc5a4f-8297-7f10-801d-823519ac0bef";
 
-key texture1 = "dd965aa4-b63e-a8d3-5ea7-f493f962d99c";
-key texture2 = "6cbc5a4f-8297-7f10-801d-823519ac0bef";
+list lookup_index_to_link;
 
 log(string str)
 {
@@ -42,8 +34,8 @@ vector char_to_offset(string char)
 {
 	integer ord = llOrd(char, 0) - 32;
 	// log("ord: " + (string)ord);
-	float x = -0.45 + (ord % 10) / 10.;
-	float y = 0.45 - llFloor(ord / 10.) / 10.;
+	float x		= -0.45 + (ord % 10) / 10.;
+	float y		= 0.45 - llFloor(ord / 10.) / 10.;
 	// log("vec: " + (string) < x, y, 0 >);
 	return <x, y, 0>;
 }
@@ -65,8 +57,7 @@ displayBuff(string buff)
 		if(c >= 480)
 			return;
 
-		integer link  = getLinkNum(line, row);
-
+		integer link  = llList2Integer(lookup_index_to_link, c);
 		vector offset = char_to_offset(llGetSubString(buff, c, c));
 		llSetLinkPrimitiveParamsFast(link, [PRIM_TEXTURE, face, texture1, <0.09, 0.09, 0.0>, offset, 0.0]);
 	}
@@ -81,17 +72,34 @@ clearDisplay()
 		for(; row < 6; row++)
 		{
 			integer link = getLinkNum(line, row);
-			llSetLinkPrimitiveParamsFast(link, [PRIM_TEXTURE, ALL_SIDES , texture1, <0.09, 0.09, 0.0>, <-0.45, 0.45, 0>, 0.0]);
+			llSetLinkPrimitiveParamsFast(link, [PRIM_TEXTURE, ALL_SIDES, texture1, <0.09, 0.09, 0.0>, <-0.45, 0.45, 0>, 0.0]);
 		}
 	}
+}
+
+init()
+{
+	llSay(0, "Initializing the board");
+	// build a lookup list for index -> linknumber
+	integer c = 0;
+	integer n = 480;
+	for(; c < n; c++)
+	{
+		integer row	 = llFloor(c / 8) % 6;
+		integer line = llFloor(c / 48);
+
+		integer link = getLinkNum(line, row);
+		lookup_index_to_link += link;
+	}
+	llSay(0, "Board ready");
 }
 
 default
 {
 	state_entry()
 	{
+		init();
 		clearDisplay();
-		displayBuff("Crystie is the best :)");
 	}
 
 	link_message(integer sender_num, integer num, string str, key id)

@@ -1,0 +1,43 @@
+name: Validate code
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - develop
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install LSL-PyOptimizer
+        run: bash ./scripts/install.sh
+
+      - name: Check formating
+        run: | 
+          echo "Running the formatting script..."
+          bash ./scripts/format.sh
+
+          echo "Checking for uncommitted changes after formatting..."
+          if ! git diff --quiet; then
+            echo "Code is wrongly formatted. Please run the formatter locally and commit the changes."
+            git diff --name-only
+            exit 1
+          fi
+
+      - name: Build the project
+        run: bash ./scripts/build.sh
