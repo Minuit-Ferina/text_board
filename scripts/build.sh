@@ -1,9 +1,5 @@
 includes=("./opt/include" )
 cmd="cpp"
-pwd
-ls
-ls opt
-ls opt/include
 
 mkdir -p dist
 

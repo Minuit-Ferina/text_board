@@ -2,9 +2,9 @@
 #include "SetLinkTextureFast.lsl"
 
 integer DISPLAY_CLEAR = 0;
-integer DISPLAY_TEXT = 1;
+integer DISPLAY_TEXT  = 1;
 
-string test1 = "Lorem ipsum dolor sit amet, consectetuer adipisc";
+string test1		  = "Lorem ipsum dolor sit amet, consectetuer adipisc";
 string test2 =
 	"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo "
 	"ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis "
@@ -44,8 +44,8 @@ vector char_to_offset(string char)
 {
 	integer ord = llOrd(char, 0) - 32;
 	// log("ord: " + (string)ord);
-	float x = -0.45 + (ord % 10) / 10.;
-	float y = 0.45 - llFloor(ord / 10.) / 10.;
+	float x		= -0.45 + (ord % 10) / 10.;
+	float y		= 0.45 - llFloor(ord / 10.) / 10.;
 	// log("vec: " + (string) < x, y, 0 >);
 	return <x, y, 0>;
 }
@@ -82,7 +82,7 @@ clearDisplay()
 		for(; row < 6; row++)
 		{
 			integer link = getLinkNum(line, row);
-			llSetLinkPrimitiveParamsFast(link, [PRIM_TEXTURE, ALL_SIDES , texture1, <0.09, 0.09, 0.0>, <-0.45, 0.45, 0>, 0.0]);
+			llSetLinkPrimitiveParamsFast(link, [PRIM_TEXTURE, ALL_SIDES, texture1, <0.09, 0.09, 0.0>, <-0.45, 0.45, 0>, 0.0]);
 		}
 	}
 }
