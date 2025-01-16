@@ -48,11 +48,11 @@ Handles external commands sent via **link messages**:
 4. Send link messages to control the display:
    - To clear the display:
      ```lsl
-     llMessageLinked(LINK_SET, 0, "", NULL_KEY);
+     llMessageLinked(LINK_SET, DISPLAY_CLEAR, "", NULL_KEY);
      ```
    - To display a custom message:
      ```lsl
-     llMessageLinked(LINK_SET, 1, "Hello World!", NULL_KEY);
+     llMessageLinked(LINK_SET, DISPLAY_TEXT, "Hello World!", NULL_KEY);
      ```
 
 ---
