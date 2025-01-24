@@ -21,7 +21,7 @@ integer getLinkNum(integer line, integer row)
 	integer link	 = getLinkWithName(link_name);
 	if(link == -1)
 	{
-		llSay(DEBUG_CHANNEL, "missing required link: " + name);
+		llSay(DEBUG_CHANNEL, "missing required link: " + link_name);
 		return -100;
 	}
 	return link;
