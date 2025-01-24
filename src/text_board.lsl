@@ -19,9 +19,12 @@ integer getLinkNum(integer line, integer row)
 {
 	string link_name = "l" + (string)line + " s" + (string)row;
 	integer link	 = getLinkWithName(link_name);
-	// log("link_name: " + link_name);
-	// log("link: " + (string)link);
-	return getLinkWithName(link_name);
+	if(link == -1)
+	{
+		llSay(DEBUG_CHANNEL, "missing required link: " + name);
+		return -100;
+	}
+	return link;
 }
 
 /*
