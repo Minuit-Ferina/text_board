@@ -35,10 +35,10 @@ integer getLinkNum(integer line, integer row)
 vector char_to_offset(string char)
 {
 	integer ord = llOrd(char, 0) - 32;
-	// log("ord: " + (string)ord);
+	// LOG("ord: " + (string)ord);
 	float x		= -0.45 + (ord % 10) / 10.;
 	float y		= 0.45 - llFloor(ord / 10.) / 10.;
-	// log("vec: " + (string) < x, y, 0 >);
+	// LOG("vec: " + (string) < x, y, 0 >);
 	return <x, y, 0>;
 }
 
