@@ -1,4 +1,4 @@
-includes=("./opt/include" )
+includes=("./include" "./opt/include")
 cmd="cpp"
 
 mkdir -p dist
